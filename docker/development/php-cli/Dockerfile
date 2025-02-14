@@ -9,11 +9,10 @@ RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
 COPY ./common/php/conf.d /usr/local/etc/php/conf.d
 
-ENV COMPOSER_ALLOW_SUPERUSER 1
+#ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --version=2.8.3 --quiet \
     && rm -rf /root/.composer/cache
 
 WORKDIR /app
 
-RUN ls -la /app
