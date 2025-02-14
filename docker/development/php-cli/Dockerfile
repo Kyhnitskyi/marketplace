@@ -16,4 +16,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --fil
 
 WORKDIR /app
 
-RUN echo "ls -la /app"
+RUN ls -la /app
