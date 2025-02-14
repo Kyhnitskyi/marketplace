@@ -1,0 +1,22 @@
+name: Pipline
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+jobs:
+  build:
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@v2
+
+          - name: Cache API composer
+            uses: actions/cache@v2
+            with:
+              path: vendor
+              key: api-composer-${{ hashFiles('composer.lock') }}
+
+          - name: Dev init
+            run: make init

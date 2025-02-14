@@ -24,6 +24,9 @@ api-composer-install:
 php-migrate:
 	docker-compose run --rm php-cli php artisan migrate
 
+test:
+	docker-compose run --rm php-cli php artisan test
+
 build-api:
 	docker build --pull --file docker/production/nginx/Dockerfile --tag ${REGISTRY}/nginx:${IMAGE_TAG} ./
 	docker build --pull --file docker/production/php-fpm/Dockerfile --tag ${REGISTRY}/api-php-fpm:${IMAGE_TAG} ./
