@@ -12,6 +12,11 @@ jobs:
       steps:
           - uses: actions/checkout@v2
 
+          - name: Install Docker & Docker Compose
+            run: |
+              sudo apt-get update
+              sudo apt-get install -y docker-compose
+
           - name: Cache API composer
             uses: actions/cache@v2
             with:
