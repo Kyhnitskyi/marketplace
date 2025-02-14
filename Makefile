@@ -19,7 +19,7 @@ docker-build:
 	docker-compose build
 
 api-composer-install:
-	docker-compose run --rm php-cli sudo composer install
+	docker-compose run --rm php-cli composer install
 
 php-migrate:
 	docker-compose run --rm php-cli php artisan migrate
