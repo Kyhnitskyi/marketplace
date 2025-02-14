@@ -14,6 +14,6 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --version=2.8.3 --quiet \
     && rm -rf /root/.composer/cache
 
-RUN chown 1000:1000 -R ./vendor \
-
 WORKDIR /app
+
+RUN chown 1000:1000 -R ./vendor
