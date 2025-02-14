@@ -23,7 +23,7 @@ services:
             context: docker
             dockerfile: development/php-fpm/Dockerfile
         volumes:
-            - ./:/app
+            - ./:/app:rw
         user: "1000:1000"
         environment:
             - APP_ENV=local
@@ -41,7 +41,7 @@ services:
             dockerfile: development/php-cli/Dockerfile
         volumes:
             - ./:/app
-        user: "1000:1000"
+        user: "1001:1001"
         networks:
             - marketplace
         expose:
