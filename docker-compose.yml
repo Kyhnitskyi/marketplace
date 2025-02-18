@@ -5,7 +5,7 @@ services:
         image: ${REGISTRY:-localhost}/marketplace-nginx:cache
         restart: unless-stopped
         build:
-            context: docker
+            context: ./
             dockerfile: development/nginx/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-nginx:cache
@@ -22,7 +22,7 @@ services:
         image: ${REGISTRY:-localhost}/marketplace-api-php-fpm:cache
         restart: unless-stopped
         build:
-            context: docker
+            context: ./
             dockerfile: development/php-fpm/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-api-php-fpm:cache
@@ -41,7 +41,7 @@ services:
         image: ${REGISTRY:-localhost}/marketplace-php-cli:cache
         restart: unless-stopped
         build:
-            context: docker
+            context: ./
             dockerfile: development/php-cli/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-php-cli:cache
