@@ -39,6 +39,7 @@ services:
 
     php-cli:
         image: ${REGISTRY:-localhost}/marketplace-php-cli:cache
+        user: "1000:1000"
         restart: unless-stopped
         build:
             context: ./
@@ -46,8 +47,8 @@ services:
             cache_from:
                 -   ${REGISTRY}/marketplace-php-cli:cache
         volumes:
-            - ./:/app
-        user: "1000:1000"
+            - .:/app
+        working_dir: /app
         networks:
             - marketplace
         depends_on:
