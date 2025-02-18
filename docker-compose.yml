@@ -47,7 +47,7 @@ services:
             cache_from:
                 -   ${REGISTRY}/marketplace-php-cli:cache
         volumes:
-            - .:/app
+            - ./:/app
         working_dir: /app
         networks:
             - marketplace

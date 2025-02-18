@@ -21,8 +21,9 @@ docker-build:
 	DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
 
 api-composer-install:
+chown -R 1000:1000 /app
 	docker-compose run --rm php-cli chown -R 1000:1000 /app
-	docker-compose run --rm php-cli composer install
+	docker-compose run --rm --user 1000:1000 php-cli composer install --working-dir=/app
 
 php-migrate:
 	docker-compose run --rm php-cli php artisan migrate
