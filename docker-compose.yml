@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
     api-nginx:
-        container_name: api-nginx
+        image: ${REGISTRY:-localhost}/marketplace-nginx:cache
         restart: unless-stopped
         build:
             context: docker
             dockerfile: development/nginx/Dockerfile
+            cache_from:
+                -   ${REGISTRY}/marketplace-nginx:cache
         ports:
-            - "85:85"
+            - "90:90"
         volumes:
             - ./:/app
         depends_on:
@@ -17,11 +19,13 @@ services:
             - marketplace
 
     api-php-fpm:
-        container_name: api-php-fpm
+        image: ${REGISTRY:-localhost}/marketplace-api-php-fpm:cache
         restart: unless-stopped
         build:
             context: docker
             dockerfile: development/php-fpm/Dockerfile
+            cache_from:
+                -   ${REGISTRY}/marketplace-api-php-fpm:cache
         volumes:
             - ./:/app:rw
         user: "1000:1000"
@@ -34,22 +38,24 @@ services:
             - "9000"
 
     php-cli:
-        container_name: php-cli
+        image: ${REGISTRY:-localhost}/marketplace-php-cli:cache
         restart: unless-stopped
         build:
             context: docker
             dockerfile: development/php-cli/Dockerfile
+            cache_from:
+                -   ${REGISTRY}/marketplace-php-cli:cache
         volumes:
             - ./:/app
-        user: "1001:1001"
+        user: "1000:1000"
         networks:
             - marketplace
-        expose:
-            - "9000"
+        depends_on:
+            - db
 
     db:
         image: postgres:16-alpine
-        container_name: marketplace_postgres
+        container_name: marketplace-db
         restart: unless-stopped
         environment:
             - POSTGRES_DB=${DB_DATABASE}
@@ -58,7 +64,7 @@ services:
         volumes:
             - dbdata:/var/lib/postgresql/data
         ports:
-            - "5434:5434"
+            - "5440:5432"
         networks:
             - marketplace
 

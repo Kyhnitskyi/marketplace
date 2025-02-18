@@ -7,6 +7,8 @@ RUN apk add --no-cache postgresql-dev && \
 #/usr/local/etc/php = $PHP_INI_DIR
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./common/php/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
 
 WORKDIR /app
+
+

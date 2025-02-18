@@ -1,4 +1,4 @@
-init:docker-down-clear docker-pull docker-build docker-up api-composer-install php-migrate
+init:docker-down-clear docker-build docker-up api-composer-install php-migrate
 up:docker-up
 down:docker-down
 restart:docker-down docker-up
@@ -16,7 +16,7 @@ docker-pull:
 	docker-compose pull
 
 docker-build:
-	docker-compose build
+	DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
 
 api-composer-install:
 	docker-compose run --rm php-cli composer install
@@ -27,16 +27,38 @@ php-migrate:
 test:
 	docker-compose run --rm php-cli php artisan test
 
+push-dev-cache: push
+
 build-api:
-	docker build --pull --file docker/production/nginx/Dockerfile --tag ${REGISTRY}/nginx:${IMAGE_TAG} ./
-	docker build --pull --file docker/production/php-fpm/Dockerfile --tag ${REGISTRY}/api-php-fpm:${IMAGE_TAG} ./
-	docker build --pull --file docker/production/php-cli/Dockerfile --tag ${REGISTRY}/php-cli:${IMAGE_TAG} ./
+	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
+	--cache-from ${REGISTRY}/marketplace-nginx:cache \
+	--tag ${REGISTRY}/marketplace-nginx:cache \
+ 	--tag ${REGISTRY}/marketplace-nginx:${IMAGE_TAG} \
+	--file docker/development/nginx/Dockerfile ./
+
+	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
+	--cache-from ${REGISTRY}/marketplace-api-php-fpm:cache \
+	--tag ${REGISTRY}/marketplace-api-php-fpm:cache \
+ 	--tag ${REGISTRY}/marketplace-api-php-fpm:${IMAGE_TAG} \
+	--file docker/development/php-fpm/Dockerfile ./
+
+	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
+	--cache-from ${REGISTRY}/marketplace-php-cli:cache \
+	--tag ${REGISTRY}/marketplace-php-cli:cache \
+	--tag ${REGISTRY}/marketplace-php-cli:${IMAGE_TAG} \
+	--file docker/development/php-cli/Dockerfile ./
 
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build-api
 
 push:
-	docker push ${REGISTRY}/nginx:${IMAGE_TAG}
-	docker push ${REGISTRY}/api-php-fpm:${IMAGE_TAG}
-	docker push ${REGISTRY}/php-cli:${IMAGE_TAG}
+	docker push ${REGISTRY}/marketplace-nginx:cache
+	docker push ${REGISTRY}/marketplace-nginx:${IMAGE_TAG}
+
+	docker push ${REGISTRY}/marketplace-api-php-fpm:cache
+	docker push ${REGISTRY}/marketplace-api-php-fpm:${IMAGE_TAG}
+
+	docker push ${REGISTRY}/marketplace-php-cli:cache
+	docker push ${REGISTRY}/marketplace-php-cli:${IMAGE_TAG}
+
 

@@ -7,7 +7,7 @@ RUN apk update && apk add unzip && \
 #/usr/local/etc/php = $PHP_INI_DIR
 RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
-COPY ./common/php/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/common/php/conf.d /usr/local/etc/php/conf.d
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
