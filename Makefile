@@ -1,3 +1,5 @@
+IMAGE_TAG=0
+
 init:docker-down-clear build-api docker-up api-composer-install php-migrate
 up:docker-up
 down:docker-down
