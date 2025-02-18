@@ -26,6 +26,7 @@ chown -R 1000:1000 /app
 	docker-compose run --rm --user 1000:1000 php-cli composer install --working-dir=/app
 
 php-migrate:
+	docker-compose run --rm php-cli php artisan key:generate
 	docker-compose run --rm php-cli php artisan migrate
 
 test:
