@@ -39,7 +39,6 @@ services:
 
     php-cli:
         image: ${REGISTRY:-localhost}/marketplace-php-cli:cache
-#        user: "1000:1000"
         restart: unless-stopped
         build:
             context: ./

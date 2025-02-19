@@ -1,6 +1,4 @@
-IMAGE_TAG=0
-
-init:docker-down-clear build-api docker-up api-composer-install php-migrate
+init:docker-down-clear try-build docker-up api-composer-install php-migrate
 up:docker-up
 down:docker-down
 restart:docker-down docker-up
@@ -21,8 +19,7 @@ docker-build:
 	DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose build --build-arg BUILDKIT_INLINE_CACHE=1
 
 api-composer-install:
-	#docker-compose run --rm php-cli sudo chown -R 1000:1000 /app
-	docker-compose run --rm php-cli composer install --working-dir=/app
+	docker-compose run --rm php-cli composer install
 
 php-migrate:
 	docker-compose run --rm php-cli php artisan key:generate
