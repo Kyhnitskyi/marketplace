@@ -49,7 +49,7 @@ jobs:
 
           - name: Wait for database to be ready
             run: |
-              docker-compose exec -T db sh -c 'while ! pg_isready -h db -p 5432; do sleep 1; done;'
+              docker-compose run --rm db sh -c 'while ! pg_isready -h db -p 5432; do sleep 1; done;'
 
           - name: Run migrations
             run: make php-migrate
