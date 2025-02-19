@@ -54,6 +54,9 @@ jobs:
           - name: Run migrations
             run: make php-migrate
 
+          - name: Check Docker images
+            run: docker images
+
           - name: Push dev cache images
             run: make push-dev-cache
             env:
