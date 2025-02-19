@@ -57,5 +57,5 @@ jobs:
           - name: Push dev cache images
             run: make push-dev-cache
             env:
-              REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+              REGISTRY: ${{ secrets.REGISTRY }}
               IMAGE_TAG: ${{ github.sha }}
