@@ -6,7 +6,7 @@ services:
         restart: unless-stopped
         build:
             context: ./
-            dockerfile: development/nginx/Dockerfile
+            dockerfile: docker/development/nginx/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-nginx:cache
         ports:
@@ -23,7 +23,7 @@ services:
         restart: unless-stopped
         build:
             context: ./
-            dockerfile: development/php-fpm/Dockerfile
+            dockerfile: docker/development/php-fpm/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-api-php-fpm:cache
         volumes:
@@ -42,7 +42,7 @@ services:
         restart: unless-stopped
         build:
             context: ./
-            dockerfile: development/php-cli/Dockerfile
+            dockerfile: docker/development/php-cli/Dockerfile
             cache_from:
                 -   ${REGISTRY}/marketplace-php-cli:cache
         volumes:

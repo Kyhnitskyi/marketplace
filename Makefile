@@ -1,5 +1,4 @@
-init:docker-down-clear try-build docker-up api-composer-install php-migrate
-dev-init:build-api docker-up api-composer-install php-migrate
+init:docker-down-clear docker-build docker-up api-composer-install php-migrate
 up:docker-up
 down:docker-down
 restart:docker-down docker-up
