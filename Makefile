@@ -1,4 +1,5 @@
-init:docker-down-clear docker-build docker-up api-composer-install php-migrate
+init:docker-down-clear docker-build docker-up api-composer-install generate-key php-migrate
+init-dev:docker-down-clear docker-build docker-up api-composer-install generate-key
 up:docker-up
 down:docker-down
 restart:docker-down docker-up
@@ -21,8 +22,10 @@ docker-build:
 api-composer-install:
 	docker-compose run --rm php-cli composer install
 
-php-migrate:
+generate-key:
 	docker-compose run --rm php-cli php artisan key:generate
+
+php-migrate:
 	docker-compose run --rm php-cli php artisan migrate
 
 test:

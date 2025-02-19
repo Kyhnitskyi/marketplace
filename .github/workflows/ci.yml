@@ -45,7 +45,14 @@ jobs:
               sed -i "s|{{DB_PASSWORD}}|${{ secrets.DB_PASSWORD }}|g" .env
 
           - name: Dev init
-            run: make init
+            run: make init-dev
+
+          - name: Wait for database to be ready
+            run: |
+              docker-compose exec db sh -c 'while ! pg_isready -h db -p 5432; do sleep 1; done;'
+
+          - name: Run migrations
+            run: make php-migrate
 
           - name: Push dev cache images
             run: make push-dev-cache
