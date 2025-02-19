@@ -35,34 +35,34 @@ push-dev-cache: push
 
 build-api:
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
-	--cache-from ${REGISTRY}/marketplace-nginx:cache \
-	--tag ${REGISTRY}/marketplace-nginx:cache \
- 	--tag ${REGISTRY}/marketplace-nginx:${IMAGE_TAG} \
+	--cache-from ${REGISTRY}/market:cache \
+	--tag ${REGISTRY}/market:cache \
+ 	--tag ${REGISTRY}/market:${IMAGE_TAG} \
 	--file docker/development/nginx/Dockerfile ./
 
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
-	--cache-from ${REGISTRY}/marketplace-api-php-fpm:cache \
-	--tag ${REGISTRY}/marketplace-api-php-fpm:cache \
- 	--tag ${REGISTRY}/marketplace-api-php-fpm:${IMAGE_TAG} \
+	--cache-from ${REGISTRY}/market:api-php-fpm-cache \
+	--tag ${REGISTRY}/market:api-php-fpm-cache \
+ 	--tag ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG} \
 	--file docker/development/php-fpm/Dockerfile ./
 
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
-	--cache-from ${REGISTRY}/marketplace-php-cli:cache \
-	--tag ${REGISTRY}/marketplace-php-cli:cache \
-	--tag ${REGISTRY}/marketplace-php-cli:${IMAGE_TAG} \
+	--cache-from ${REGISTRY}/market:php-cli-cache \
+	--tag ${REGISTRY}/market:php-cli-cache \
+	--tag ${REGISTRY}/market:php-cli-${IMAGE_TAG} \
 	--file docker/development/php-cli/Dockerfile ./
 
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build-api
 
 push:
-	docker push ${REGISTRY}/marketplace-nginx:cache
-	docker push ${REGISTRY}/marketplace-nginx:${IMAGE_TAG}
+	docker push ${REGISTRY}/market:nginx-cache
+	docker push ${REGISTRY}/market:nginx-${IMAGE_TAG}
 
-	docker push ${REGISTRY}/marketplace-api-php-fpm:cache
-	docker push ${REGISTRY}/marketplace-api-php-fpm:${IMAGE_TAG}
+	docker push ${REGISTRY}/market:api-php-fpm-cache
+	docker push ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
 
-	docker push ${REGISTRY}/marketplace-php-cli:cache
-	docker push ${REGISTRY}/marketplace-php-cli:${IMAGE_TAG}
+	docker push ${REGISTRY}/market:php-cli-cache
+	docker push ${REGISTRY}/market:php-cli-${IMAGE_TAG}
 
 
