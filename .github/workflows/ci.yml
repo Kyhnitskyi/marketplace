@@ -47,6 +47,9 @@ jobs:
           - name: Dev init
             run: make init-dev
 
+          - name: Check database logs
+            run: docker-compose logs db
+
           - name: Wait for database to be ready
             run: |
               docker-compose run --rm db sh -c 'while ! pg_isready -h db -p 5432; do sleep 1; done;'
