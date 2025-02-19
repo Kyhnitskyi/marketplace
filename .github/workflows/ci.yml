@@ -45,7 +45,7 @@ jobs:
               sed -i "s|{{DB_PASSWORD}}|${{ secrets.DB_PASSWORD }}|g" .env
 
           - name: Dev init
-            run: make init
+            run: make dev-init
 
           - name: Push dev cache images
             run: make push-dev-cache
