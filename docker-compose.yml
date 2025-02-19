@@ -19,7 +19,7 @@ services:
             - marketplace
 
     api-php-fpm:
-        image: ${REGISTRY:-localhost}/market:api-php-fpm:-ache
+        image: ${REGISTRY:-localhost}/market:api-php-fpm-cache
         restart: unless-stopped
         build:
             context: ./
