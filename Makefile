@@ -50,14 +50,11 @@ build-api:
 	--file docker/development/php-cli/Dockerfile ./
 
 tags:
-	docker tag marketplace-nginx:cache ${REGISTRY}/market:nginx-cache
-	docker tag marketplace-nginx:cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
+	docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
 
-	docker tag marketplace-api-php-fpm:cache ${REGISTRY}/market:api-php-fpm-cache
-	docker tag marketplace-api-php-fpm:cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
+	docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
 
-	docker tag marketplace-php-cli:cache ${REGISTRY}/market:php-cli-cache
-	docker tag marketplace-php-cli:cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
+	docker tag ${REGISTRY}/market:php-cli-cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
 
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build-api
