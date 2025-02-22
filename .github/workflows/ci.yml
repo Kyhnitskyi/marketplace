@@ -61,11 +61,10 @@ jobs:
           - name: make tags
             env:
               REGISTRY: ${{ secrets.REGISTRY }}
-              IMAGE_TAG: master-${GITHUB_RUN_NUMBER}
             run: |
-              docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
-              docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
-              docker tag ${REGISTRY}/market:php-cli-cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
+              docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-dev-${GITHUB_RUN_NUMBER}
+              docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-dev-${GITHUB_RUN_NUMBER}
+              docker tag ${REGISTRY}/market:php-cli-cache ${REGISTRY}/market:php-cli-dev-${GITHUB_RUN_NUMBER}
 
           - name: Check docker images
             run: docker images
