@@ -60,6 +60,9 @@ jobs:
           - name: make tags
             run: make tags
 
+          - name: Check docker images
+            run: docker images
+
           - name: Push dev cache images
             run: make push-dev-cache
             env:
