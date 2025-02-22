@@ -58,10 +58,13 @@ jobs:
             run: make test
 
           - name: make tags
-            run:
-              docker tag ${{ secrets.REGISTRY }}/market:nginx-cache ${{ secrets.REGISTRY }}/market:nginx-${{ github.sha }}
-              docker tag ${{ secrets.REGISTRY }}/market:api-php-fpm-cache ${{ secrets.REGISTRY }}/market:api-php-fpm-${{ github.sha }}
-              docker tag ${{ secrets.REGISTRY }}/market:php-cli-cache ${{ secrets.REGISTRY }}/market:php-cli-${{ github.sha }}
+            env:
+              REGISTRY: ${{ secrets.REGISTRY }}
+              IMAGE_TAG: ${{ github.sha }}
+            run: |
+              docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
+              docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
+              docker tag ${REGISTRY}/market:php-cli-cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
 
           - name: Check docker images
             run: docker images
