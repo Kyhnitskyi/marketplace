@@ -49,13 +49,6 @@ build-api:
 	--tag ${REGISTRY}/market:php-cli-cache \
 	--file docker/development/php-cli/Dockerfile ./
 
-tags:
-	docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
-
-	docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
-
-	docker tag ${REGISTRY}/market:php-cli-cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
-
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build-api
 
