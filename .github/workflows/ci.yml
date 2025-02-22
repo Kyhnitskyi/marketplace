@@ -8,6 +8,7 @@ on:
 
 env:
     REGISTRY: ${{ secrets.REGISTRY }}
+    IMAGE_TAG: master-${{ GITHUB_RUN_NUMBER }}
 
 jobs:
   build:
@@ -58,9 +59,9 @@ jobs:
             run: make test
 
           - name: make tags
-            env:
-              REGISTRY: ${{ secrets.REGISTRY }}
-              IMAGE_TAG: ${{ github.sha }}
+#            env:
+#              REGISTRY: ${{ secrets.REGISTRY }}
+#              IMAGE_TAG: ${{ github.sha }}
             run: |
               docker tag ${REGISTRY}/market:nginx-cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
               docker tag ${REGISTRY}/market:api-php-fpm-cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
@@ -71,6 +72,6 @@ jobs:
 
           - name: Push dev cache images
             run: make push-dev-cache
-            env:
-              REGISTRY: ${{ secrets.REGISTRY }}
-              IMAGE_TAG: ${{ github.sha }}
+#            env:
+#              REGISTRY: ${{ secrets.REGISTRY }}
+#              IMAGE_TAG: ${{ github.sha }}
