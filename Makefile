@@ -37,20 +37,27 @@ build-api:
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
 	--cache-from ${REGISTRY}/market:cache \
 	--tag ${REGISTRY}/market:cache \
- 	--tag ${REGISTRY}/market:${IMAGE_TAG} \
 	--file docker/development/nginx/Dockerfile ./
 
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
 	--cache-from ${REGISTRY}/market:api-php-fpm-cache \
 	--tag ${REGISTRY}/market:api-php-fpm-cache \
- 	--tag ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG} \
 	--file docker/development/php-fpm/Dockerfile ./
 
 	DOCKER_BUILDKIT=1 docker build --pull --build-arg BUILDKIT_INLINE_CACHE=1 \
 	--cache-from ${REGISTRY}/market:php-cli-cache \
 	--tag ${REGISTRY}/market:php-cli-cache \
-	--tag ${REGISTRY}/market:php-cli-${IMAGE_TAG} \
 	--file docker/development/php-cli/Dockerfile ./
+
+tags:
+	docker tag marketplace-nginx:cache ${REGISTRY}/market:nginx-cache
+	docker tag marketplace-nginx:cache ${REGISTRY}/market:nginx-${IMAGE_TAG}
+
+	docker tag marketplace-api-php-fpm:cache ${REGISTRY}/market:api-php-fpm-cache
+	docker tag marketplace-api-php-fpm:cache ${REGISTRY}/market:api-php-fpm-${IMAGE_TAG}
+
+	docker tag marketplace-php-cli:cache ${REGISTRY}/market:php-cli-cache
+	docker tag marketplace-php-cli:cache ${REGISTRY}/market:php-cli-${IMAGE_TAG}
 
 try-build:
 	REGISTRY=localhost IMAGE_TAG=0 make build-api
